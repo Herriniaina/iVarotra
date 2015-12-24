@@ -1,0 +1,20 @@
+{% extends "::templateadmin.html.twig" %}
+{% block body %}
+<form class="form-horizontal well" method="POST">
+	<div class="form-group">
+		<label>{{ form_label(form.nomFournisseur,'NOM FOURNISSSEUR') }}</label>
+		{{ form_widget(form.nomFournisseur,{attr:{'class':'form-control','required':'false'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(form.mailFournisseur,'MAIL FOURNISSSEUR') }}</label>
+		{{ form_widget(form.mailFournisseur,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(form.adresseFournisseur,'ADRESSE FOURNISSSEUR') }}</label>
+		{{ form_widget(form.adresseFournisseur,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		{{ form_widget(form.cmdValider,{'attr':{'class':'btn btn-success'}}) }}
+	</div>
+</form>
+{% endblock %}

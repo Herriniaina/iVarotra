@@ -1,0 +1,52 @@
+{% extends '::template.html.twig' %}
+{% block body %}
+    <div style="padding:0" class="alert alert-info">
+        <div  class="row">
+            <div style="margin-top:1%;position:absolute">
+                <form id="#category" class="form-inline col-md-12" method="POST" action="{{ path('homepage') }}">
+                    <div class="form-group">
+                        <label>CATEGORIE</label>
+                        {{ form_widget(frm.id,{'attr':{'class':'form-control'}}) }}
+                        <input type="submit" class="btn btn-primary" value="Filtrer"/>
+                    </div>
+                </form>
+            </div>
+            <div style="float:right;margin-right:2%"><table border=1><tr><td><span><a id="panierLogo" href="{{ path('visiteur_affichelistepanier') }}"><img width=64 height=64 src="{{ asset('images/panier.jpg') }}"/></td><td><a href="{{ path('visiteur_affichelistepanier') }}"><font size="72" style="text-align:center">{{ nb }}</font></a></td></tr></table>{% if user != 'Panier' %}<a href="{{ path('fos_user_security_logout') }}">Deconnexion</a>{% endif %}
+            </div>
+        </div>
+    </div>
+    {# MESSAGE #}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="flash-notice alert alert-success">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        {# AFFICHAGE LISTE PRODUIT #}
+            <div class="row">
+                <form id="frmAchat" method="POST" action="{{ path('visiteur_voirdetail') }}">
+                {% for prod in pagination %}
+                    <div class="col-sm-3 col-lg-3 col-md-3">
+                        <div class="thumbnail" style="background-color:#E0F8F7">
+                           <img style="width:320px;height:230px" src="{{ asset('uploads/') ~ prod.image.chemin }}" alt="">
+                            <div  class="caption">
+                                <h4 class="pull-right">&euro; {{prod.prixUnitaire}}</h4>
+                                <h4><a class="liennomprod" href="#">{% if prod.libelleProduit|length>10 %}{{prod.libelleProduit|slice(0,10)~"..."}}{% else %}{{prod.libelleProduit}}{% endif %}</a>
+                                </h4>
+                                <p>{% if prod.description|length>30 %}{{prod.description|slice(0,30)~"..."}}{% else %}{{ prod.description }}{% endif %}</p>
+                            </div>
+                            <div>
+                                <div id="masquer">
+                                    <button class="btn btn-primary acheter" name='idProduit' value="{{ prod.id }}">Voir Detail Produit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </form>
+            </div>
+{# PAGINATION #}
+<div class="navigation" align="center">
+    {{ knp_pagination_render(pagination) }}
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}iVarotra{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" />  
+        <link rel="stylesheet" href="{{ asset('bootstrap/css/datepicker.css') }}" type="text/css" />       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        <script type="text/javascript">
+          $(function(){
+            var check = $(".datepicker").datepicker();
+            $(".datepicker").on('changeDate',function(){
+              $(".datepicker").datepicker('hide');
+            });
+          })
+        </script>
+  {% block javascripts %}
+  {% endblock %}
+    </head>
+    <body class="container">
+
+        <!--SLIDER-->
+        <div class="row">
+          <div class="col-md-12" height="5%">
+            <img height=150px width=100% src="{{ asset('images/banniereadmin.jpg') }}">
+          </div>
+        </div>
+        <!--MENU-->
+        <nav class="navbar navbar" style="background-color:lightgray" role="navigation">
+                <div class="navbar-header"> 
+                    <a class="navbar-brand" href="{{ path('homepage') }}">iVarotra</a> 
+                </div> 
+            
+            <p class="navbar-text">the best quality of products</p>
+
+                <ul class="nav navbar-nav pull-left"> 
+                     <li><a href="{{ path('ecommerce_ajoutproduit') }}">Produit</a></li> 
+                     <li><a href="{{ path('ecommerce_ajoutcategorie') }}">Categorie</a></li> 
+                     <li><a href="{{ path('ecommerce_ajoutfournisseur') }}">Fournisseur</a></li>
+                     <li><a href="{{ path('ecommerce_ajoutachat') }}">Achat</a></li> 
+                     <li><a href="{{ path('ecommerce_stock') }}">Stock</a></li>
+                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Session<b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="{{ path('fos_user_registration_register') }}">New User</a></li>
+                          <li class="divider"></li> 
+                          <li><a href="{{ path('fos_user_change_password') }}">Change Password</a></li>
+                          <li class="divider"></li> 
+                          <li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
+                      </ul> 
+
+                     </li>
+                </ul> 
+        </nav> 
+
+            {% block body %}{% endblock %}
+         <hr/>   
+        <div class="footer" align="center">
+            Copyright &copy; iVarotra - {{ "now"|date('Y')}}
+        </div>  
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+          <script src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+          <script src="{{ asset('bootstrap/js/bootstrap-datepicker.js') }}"></script>
+        </body>
+</html>

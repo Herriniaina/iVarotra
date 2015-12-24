@@ -1,0 +1,43 @@
+{% extends "::templateadmin.html.twig" %}
+{% block stylesheets %}
+	<style type="text/css">
+		tr{
+			text-align:center;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+<table class="table table-bordered table-stripped">
+	<tr>
+		<td><b>PRODUIT</b></td>
+		<td><b>QUANTITE EN STOCK</b></td>
+	</tr>
+	{% for stk in achat %}
+	{% for vt in vente %}
+	{% if stk.idProduit==vt.idProduit %}
+		{% if  (stk.qteStock - vt.qteStock)<=2 %}
+		<tr bgcolor=red>
+			<td>{{ stk.libelleProduit }}</td>
+			<td align=center>{{ stk.qteStock - vt.qteStock }}</td>
+		</tr>
+		{% elseif (stk.qteStock - vt.qteStock)<=5 %}
+		<tr bgcolor=lightblue>
+			<td>{{ stk.libelleProduit }}</td>
+			<td align=center>{{ stk.qteStock - vt.qteStock}}</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td>{{ stk.libelleProduit }}</td>
+			<td align=center>{{ stk.qteStock - vt.qteStock}}</td>
+		</tr>
+		{% endif %}
+	{% endif %}
+	{% endfor %}
+	{% endfor %}
+</table>
+<table border=1 cellpadding=0 cellspacing=0>
+<tr><td>Qte Ok</td></tr>
+<tr><td bgcolor=lightblue>Reappro.</td></tr>
+<tr><td bgcolor=red>Alerte.</td></tr>
+<table>
+{% endblock %}

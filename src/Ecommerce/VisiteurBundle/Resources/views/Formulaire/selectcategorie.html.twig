@@ -1,0 +1,12 @@
+       	<div class="row">
+            <form class="form-inline col-md-6">
+                <div class="form-group">
+                    <label>CATEGORIE</label>
+                    {{ form_widget(frm.id,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </form>
+            <div class="col-md-6"></div>
+            <div class="col-md-2 pull-right"><span><img width=64 height=64 src="{{ asset('images/panier.jpg') }}"/>{% if user is defined %}{{ user }}<br/><a href="{{ path('fos_user_security_logout') }}">Deconnexion</a>{% else %}Panier{% endif %}
+            </div>
+            </div>
+        </div>

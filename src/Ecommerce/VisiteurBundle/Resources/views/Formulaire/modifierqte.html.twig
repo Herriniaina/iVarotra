@@ -1,0 +1,30 @@
+ {% extends '::template.html.twig' %}
+    {% block body %}
+            <div style="margin:auto;width:90%">
+                {% for prod in prods %}
+                        <div class="panel panel-primary" align="center">
+                          <div class="panel-heading">
+                            <h3 class="panel-title">{{prod.libelleProduit}}</h3>
+                          </div>
+                          <div class="panel-body">
+                            
+                            <img src="{{ asset('uploads/') ~ prod.image.chemin }}" alt="" class="img-responsive"><hr>
+                            <b>Prix : {{prod.prixunitaire}} €</b><hr>
+                            {{prod.description}}
+                          </div>
+                          <div class="panel-footer">
+                                    <form class="form-inline" method="post" action="{{ path('visiteur_ajoutpanier') }}">
+                                        <div class="form-group">
+                                            <label>NOUVELLE QTE</label><input type="text" name="qte"  class="form-control">
+                                            <input type="text" name="idProd" value="{{ prod.id }}" hidden="hidden"/>
+                                            <div class="btn-group">
+                                                <button type="submit" class="btn btn-warning">Modifier</button>
+                                                <a href="{{ path('visiteur_affichelistepanier') }}" class="btn btn-info">Annuler</a>
+                                            </div>
+                                        </div>
+                                    </form>                          
+                          </div>
+                        </div>
+                {% endfor %}
+            </div>
+    {% endblock %}

@@ -1,0 +1,40 @@
+{% extends "::templateadmin.html.twig" %}
+{% block body %}
+<form class="form-horizontal well" method="POST"  {{ form_enctype(frm) }}>
+	<div class="form-group">
+		<label>{{ form_label(frm.libelleProduit,'LIBELLE PRODUIT') }}</label>
+		{{ form_widget(frm.libelleProduit,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(frm.description,'DESCRIPTION') }}</label>
+		{{ form_widget(frm.description,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(frm.prixUnitaire,'PRIX UNITAIRE') }}</label>
+		{{ form_widget(frm.prixUnitaire,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(frm.qte_reappro,'REAPPROVISIONNEMENT SI QUANTITE INFERIEUR A') }}</label>
+		{{ form_widget(frm.qte_reappro,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(frm.qte_alerte,'ALERTE QUAND QUANTITE INFERIEURE A') }}</label>
+		{{ form_widget(frm.qte_alerte,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(frm.categorie,'CATEGORIE PRODUIT') }}</label>
+		{{ form_widget(frm.categorie,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(frm.fournisseur,'FOURNISSEUR') }}</label>
+		{{ form_widget(frm.fournisseur,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(frm.image.file,'PHOTO DU PRODUIT') }}</label>
+		{{ form_widget(frm.image.file,{attr:{'class':'form-control'}}) }}
+	</div>
+	<div class="form-group">
+		{{ form_widget(frm.cmdValider,{'attr':{'class':'btn btn-success'}}) }}
+	</div>
+</form>
+{% endblock %}

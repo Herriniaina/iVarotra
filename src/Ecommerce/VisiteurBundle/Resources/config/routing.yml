@@ -1,0 +1,30 @@
+visiteur_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: VisiteurBundle:Default:index }
+visiteur_detailproduit:
+    path:    visiteur/afficheProd
+    defaults: { _controller: VisiteurBundle:Visiteur:afficheDetailProd }
+visiteur_ajoutpanier:
+    path:    visiteur/ajoutPanier
+    defaults: { _controller: VisiteurBundle:Panier:ajoutPanier }
+visiteur_afficherpanier:
+    path:    visiteur/affichePanier
+    defaults: { _controller: VisiteurBundle:Panier:afficherPanier }
+visiteur_affichelistepanier:
+    path:    visiteur/listepanier
+    defaults: { _controller: VisiteurBundle:Panier:listePanier}
+visiteur_supprimersession:
+    path:    visiteur/suprime/{id}
+    defaults: { _controller: VisiteurBundle:Panier:supprimerSession}
+visiteur_modifiersession:
+    path:    visiteur/modif/{id}
+    defaults: { _controller: VisiteurBundle:Panier:modifierSession}
+visiteur_envoiemail:
+    path:    visiteur/mailto
+    defaults: { _controller: VisiteurBundle:Panier:envoierMail}
+visiteur_voirdetail:
+    path:    /voirdetail
+    defaults: { _controller: VisiteurBundle:Visiteur:voirDetail }
+visiteur_modifierdetail:
+    path:    visiteur/modifierdetail/{id}
+    defaults: { _controller: VisiteurBundle:Visiteur:modifierDetail }

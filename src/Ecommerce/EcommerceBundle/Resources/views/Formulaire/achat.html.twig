@@ -1,0 +1,53 @@
+{% extends "::templateadmin.html.twig" %}
+{% block javascripts %}
+<script type="text/javascript">
+	function cloner(){
+			$("#ecommerce_ecommercebundle_achat_fournisseur").trigger('change');
+		};
+$(function(){
+	//RECHARGER LE TABLEAU
+	k=0;
+	$("#ecommerce_ecommercebundle_achat_fournisseur").change(function(){
+		$.ajax({
+			url:"{{ path('ecommerce_afficheproduit') }}",
+			type:'POST',
+			data:{idF:$(this).val()},
+			success: function(data){
+				if(data != ""){
+					var tableau = "<tr><td><select name='idProd[]'  class='form-control'>";
+					for(var i=0;i<data.length;i++){
+						 tableau += "<option value="+ data[i].id +">"+ data[i].libelleProduit+ "</option>";
+					}
+					tableau += "</select></td><td><input type='text' class='form-control' name='qte[]' value='1'></td></tr>"
+					$("#tblArticle").append(tableau);
+
+					k++;			
+				}
+			}
+		});
+	});
+});
+</script>
+{% endblock %}
+{% block body %}
+<form id="frmAchat" class="form-horizontal well" method="POST">
+	<div class="form-group">
+		<label>{{ form_label(frm.dateAchat,'DATE ACHAT') }}</label>
+		{{ form_widget(frm.dateAchat,{attr:{'class':'form-control datepicker','data-date-format':'dd/mm/yyyy'}}) }}
+	</div>
+	<div class="form-group">
+		<label>{{ form_label(frm.fournisseur,'FOURNISSSEUR') }}</label>
+		{{ form_widget(frm.fournisseur,{attr:{'class':'form-control'}}) }}
+	</div>
+	<table id="tblArticle" class="table table-bordered">
+		<tr>
+			<th>PRODUIT</th>
+			<th>QUANTITE</th>
+		</tr>
+	</table>
+	<div id="form-group" align="center">
+		{{ form_widget(frm.cmdValider,{'attr':{'class':'btn btn-success'}}) }}
+		<a class='btn btn-info idProduit' onClick="cloner()">Ajouter Produit</a>
+	</div>
+</form>
+{% endblock %}

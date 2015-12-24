@@ -1,0 +1,72 @@
+<?php
+namespace Ecommerce\EcommerceBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ */
+class DetailAchat {
+     /**
+      * @ORM\Id
+      * @ORM\ManyToOne(targetEntity="Ecommerce\EcommerceBundle\Entity\Achat")
+      */
+    private $achat;
+    
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Ecommerce\EcommerceBundle\Entity\Produit")
+     */
+    private $produit;
+    
+    
+    /**
+     * @ORM\Column(name="qte_achetee", type="integer")
+     */
+    private $qteachetee;
+    
+
+    public function __construct() {
+    }
+
+    public function setProduit(\Ecommerce\EcommerceBundle\Entity\Produit $produit) {
+        $this->produit = $produit;
+        return $this;
+    }
+
+    public function getProduit() {
+        return $this->produit;
+    }
+
+    public function setAchat(\Ecommerce\EcommerceBundle\Entity\Achat $achat){
+        $this->achat = $achat;
+        return $this;
+    }
+
+    public function getAchat() {
+        return $this->achat;
+    }
+
+    /**
+     * Set qteachetee
+     *
+     * @param integer $qteachetee
+     * @return DetailAchat
+     */
+    public function setQteachetee($qteachetee)
+    {
+        $this->qteachetee = $qteachetee;
+    
+        return $this;
+    }
+
+    /**
+     * Get qteachetee
+     *
+     * @return integer
+     */
+    public function getQteachetee()
+    {
+        return $this->qteachetee;
+    }
+}

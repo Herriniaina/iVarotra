@@ -1,0 +1,127 @@
+<?php
+
+namespace Ecommerce\EcommerceBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Vente
+ *
+ * @ORM\Table(name="tblvente")
+ * @ORM\Entity(repositoryClass="Ecommerce\EcommerceBundle\Entity\VenteRepository")
+ */
+class Vente
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_vente", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_vente", type="date")
+     */
+    private $dateVente;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="qte_vendue", type="integer")
+     */
+    private $qteVendue;
+
+    /**
+     * @var Produit $produit
+     *
+     * @ORM\ManyToOne(targetEntity="Produit",inversedBy="vente",cascade={"persist","remove","merge"})
+     *@ORM\JoinColumns({@ORM\JoinColumn(name="Produit_idProduit",referencedColumnName="id_produit",nullable=false)})
+     */
+    private $produit;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set dateVente
+     *
+     * @param \DateTime $dateVente
+     * @return Vente
+     */
+    public function setDateVente($dateVente)
+    {
+        $this->dateVente = $dateVente;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateVente
+     *
+     * @return \DateTime 
+     */
+    public function getDateVente()
+    {
+        return $this->dateVente;
+    }
+
+    /**
+     * Set qteVendue
+     *
+     * @param integer $qteVendue
+     * @return Vente
+     */
+    public function setQteVendue($qteVendue)
+    {
+        $this->qteVendue = $qteVendue;
+    
+        return $this;
+    }
+
+    /**
+     * Get qteVendue
+     *
+     * @return integer 
+     */
+    public function getQteVendue()
+    {
+        return $this->qteVendue;
+    }
+
+    /**
+     * Set produit
+     *
+     * @param \Ecommerce\EcommerceBundle\Entity\Produit $produit
+     * @return Vente
+     */
+    public function setProduit(\Ecommerce\EcommerceBundle\Entity\Produit $produit)
+    {
+        $this->produit = $produit;
+    
+        return $this;
+    }
+
+    /**
+     * Get produit
+     *
+     * @return \Ecommerce\EcommerceBundle\Entity\Produit 
+     */
+    public function getProduit()
+    {
+        return $this->produit;
+    }
+    public function __construct(){
+        $this->date_vente=new \Datetime();
+    }
+}

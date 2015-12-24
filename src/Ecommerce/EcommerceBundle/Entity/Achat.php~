@@ -1,0 +1,156 @@
+<?php
+
+namespace Ecommerce\EcommerceBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Achat
+ *
+ * @ORM\Table(name="tblachat")
+ * @ORM\Entity(repositoryClass="Ecommerce\EcommerceBundle\Entity\AchatRepository")
+ */
+class Achat
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_achat", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_achat", type="date")
+     */
+    private $dateAchat;
+
+    /**
+     * @var ArrayCollection Produit $produit
+     *
+     *Owing Side
+     *
+     * @ORM\ManyToMany(targetEntity="Produit",inversedBy="achat",cascade={"persist","remove","merge"})
+     * @ORM\JoinTable(name="DetailAchat",joinColumns={@ORM\JoinColumn(name="Achat_idAchat",referencedColumnName="id_achat")},inverseJoinColumns={@ORM\JoinColumn(name="Produit_idProduit",referencedColumnName="id_produit")})
+     */
+    private $produits;
+
+    /**
+     * @var Fournisseur $fournisseur
+     * 
+     * @ORM\OneToOne(targetEntity="Fournisseur",inversedBy="Fournisseur",cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="Fournisseur_idFournisseur",referencedColumnName="id_fournisseur")
+     */
+    private $fournisseur;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set dateAchat
+     *
+     * @param \DateTime $dateAchat
+     * @return Achat
+     */
+    public function setDateAchat($dateAchat)
+    {
+        $this->dateAchat = $dateAchat;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateAchat
+     *
+     * @return \DateTime 
+     */
+    public function getDateAchat()
+    {
+        return $this->dateAchat;
+    }
+
+    public function __construct(){
+        $this->date_achat = new \DateTime();
+        $this->produits = new ArrayCollection();
+    }
+
+    /**
+     * Add produit
+     *
+     * @param Produit $produit
+     */
+    public function addProduit(Produit $produit)
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits->add($produit);
+        }
+    }
+
+    /**
+     * Remove produits
+     *
+     * @param \Ecommerce\EcommerceBundle\Entity\Achat $produits
+     */
+    public function removeProduit(\Ecommerce\EcommerceBundle\Entity\Achat $produits)
+    {
+        $this->produits->removeElement($produits);
+    }
+
+    /**
+     * Get produits
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProduits()
+    {
+        return $this->produits;
+    }
+
+    /**
+     * Set fournisseur
+     *
+     * @param \Ecommerce\EcommerceBundle\Entity\Fournisseur $fournisseur
+     * @return Achat
+     */
+    public function setFournisseur(\Ecommerce\EcommerceBundle\Entity\Fournisseur $fournisseur = null)
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get fournisseur
+     *
+     * @return \Ecommerce\EcommerceBundle\Entity\Fournisseur
+     */
+    public function getFournisseur()
+    {
+        return $this->fournisseur;
+    }
+
+    public function setProduits($items)
+    {
+        if($items instanceof ArrayCollection || is_array($items)){
+            foreach ($items as $item) {
+                $this->addProduit($item);
+            }
+        }     
+        else if($items instanceof Produit){
+                $this->addProduit($items);
+        }
+        else{
+                throw new Exception("Erreur");
+            }
+    }
+}

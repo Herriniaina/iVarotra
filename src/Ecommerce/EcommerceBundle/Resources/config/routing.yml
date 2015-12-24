@@ -1,0 +1,35 @@
+#FOURNISSEUR
+ecommerce_ajoutfournisseur:
+    pattern:  /admin/ajoutfournisseur
+    defaults: { _controller: EcommerceBundle:Fournisseur:index }
+
+# CATEGORIE
+ecommerce_ajoutcategorie:
+    pattern:  /admin/ajoutcategorie
+    defaults: { _controller: EcommerceBundle:Categorie:index }
+
+ecommerce_suppressioncategorie:
+    pattern:  /admin/suppressioncategorie
+    defaults: { _controller: EcommerceBundle:Categorie:suppression }
+    requirements:
+        id:   \d+
+
+ecommerce_modificationcategorie:
+    pattern:  /admin/modificationcategorie
+    defaults: { _controller: EcommerceBundle:Categorie:modification }
+
+# PRODUIT
+ecommerce_ajoutproduit:
+    pattern:  /admin/ajoutproduit
+    defaults: { _controller: EcommerceBundle:Produit:index }
+
+# ACHAT
+ecommerce_ajoutachat:
+    pattern:  /admin/achat
+    defaults: { _controller: EcommerceBundle:Achat:index }
+ecommerce_afficheproduit:
+    pattern:  /admin/achats
+    defaults: { _controller: EcommerceBundle:Achat:afficheProduit }
+ecommerce_stock:
+    pattern:  /admin/stock
+    defaults: { _controller: EcommerceBundle:Achat:getStock }

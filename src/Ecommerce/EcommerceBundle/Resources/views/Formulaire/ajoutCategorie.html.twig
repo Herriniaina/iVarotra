@@ -1,0 +1,106 @@
+{% extends "::templateadmin.html.twig" %}
+
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.table').DataTable({searching:false,select:true});
+	$(".modifier").click(function(){
+		$("#id_categorie").val($(this).attr('id'));
+		$("#libelle_categorie").val($(this).attr('value'));
+	});
+//MODIFICATION
+	$("#validModif").bind("click",function(){
+		var id = $('#id_categorie').val();
+		var nomcat = $('#libelle_categorie').val().toUpperCase();
+  	if(confirm("Voulez-vous vraiment modifier?")){
+			$.ajax({
+			type:"POST",
+	        url: "{{ path('ecommerce_modificationcategorie') }}",
+	        data:{id:id,nomcat:nomcat},
+	        success: function(data,ob,xhr){
+	        	if(xhr.status)
+	            	document.location.href="{{ path('ecommerce_ajoutcategorie') }}"; 
+	        }
+	        });
+	};	
+  	});
+//SUPPRESSION
+	$(".supprimer").click(function(){
+	var id = $(this).attr('value');
+  	if(confirm("Voulez-vous vraiment supprimer?")){
+			$.ajax({
+			type:"POST",
+	        url: "{{ path('ecommerce_suppressioncategorie') }}",
+	        data:{id:id},
+	        success: function(data,ob,xhr){
+	        	if(xhr.status)
+	            	document.location.href="{{ path('ecommerce_ajoutcategorie') }}"; 
+	        }
+	        });
+	};	
+  	});
+});
+</script>
+	<form class="form-horizontal well" method="POST">
+		<div class="form-group">
+			<label>{{ form_label(form.nomCategorie,'LIBELLE CATEGORIE') }}</label>
+			{{ form_widget(form.nomCategorie,{attr:{'class':'form-control','required':'false'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_widget(form.cmdValider,{'attr':{'class':'btn btn-success'}}) }}
+		</div>
+	</form>
+	<table class="table table-striped table-bordered table-hover">
+	<thead>
+		<tr>
+			<th width=20%>ID CATEGORIE</th>
+			<th width=60%>LIBELLE CATEGORIE</th>
+			<th width=20%>OPERATIONS</th>
+		</tr>
+	</thead>
+		{# BOUCLE POUR LA LISTE DE CATEGORIES #}
+	<tbody>
+		{% set i=0 %}
+		{% for lst in liste %}
+		{% if i % 2 == 0 %}{% set bg="warning" %}{% else %}{% set bg = "success" %}{% endif %}
+			<tr class={{ bg }}>
+				<td>{{ lst.id }}</td>
+				<td>{{ lst.nomcategorie }}</td>
+				<td><a href="#" value="{{ lst.id }}" class="btn btn-danger form-group supprimer"><span class="glyphicon glyphicon-remove">Supprimer</span>&nbsp;</a>&nbsp;<a id="{{ lst.id}}" value="{{ lst.nomcategorie }}" class="btn btn-success form-group modifier" data-toggle="modal" data-target="#mdlcategorie" ><span class="glyphicon glyphicon-edit"></span>&nbsp;Modifier</a></td>
+			</tr>
+			{% set i = i+1 %}
+		{% endfor %}
+	</tbody>
+	</table>
+
+	{# MODAL #}
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="mdlcategorie">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="gridSystemModalLabel">MODIFICATION CATEGORIE</h4>
+	      </div>
+	      <div class="modal-body">
+		      	<form class="form-horizontal well" method="POST">
+					<div class="form-group">
+						<label>{{ form_label(form.nomCategorie,'LIBELLE CATEGORIE') }}</label>
+						{{ form_widget(form.nomCategorie,{attr:{'class':'form-control','required':'false'}}) }}
+					</div>
+					<div class="form-group">
+						<input id="id_categorie" class="hidden" type="text" class="form-control" name="txtId"/>
+						<input id="libelle_categorie" type="text" class="form-control" name="txtNomCat"/>
+	    			</div>
+				</form>
+	      </div>
+	      <div id="idProd"></div>
+	      <div class="modal-footer">
+	    			<div class="form-inline">
+						<a href="#" data-dismiss="modal" class="btn btn-info form-control">Annuler</a>
+		    			<input type="button" class="btn btn-success form-control" id="validModif" value="Modifier">
+	    			</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+{% endblock %}

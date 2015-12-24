@@ -1,0 +1,33 @@
+<div style="text-align:center;height:150"><b><u>FACTURE</u></b></div>
+<table border=1 cellpadding=1 cellspacing=1 width=900>
+   <tr>
+      <td style="width:100px">DATE</td>
+      <td style="width:300px">DESIGNATION</td>
+      <td style="width:100px">PRIX UNITAIRE</td>
+      <td style="width:100px">QUANTITE</td>
+      <td style="width:100px">MONTANT</td>
+   </tr>
+   {% set k=0 %}
+   {% set total=0 %}
+   {% for prod in prods %}
+   {% if k % 2 == 0 %}{% set color='lightblue' %}{% else %}{% set color='lightgrey' %}{% endif %}
+   <tr bgcolor={{ color }}>
+      <td>{{ "now"|date('d/m/Y') }}</td>
+      <td>{{ prod.libelleProduit }}</td>
+      <td>{{ prod.prixUnitaire }}&euro;</td>
+      <td>{{ qte[prod.id] }}</td>
+      <td>{{ qte[prod.id]*prod.prixUnitaire }}&euro;</td>
+      {% set total=total + (qte[prod.id]*prod.prixUnitaire)   %}
+   </tr>
+
+   {% set k=k+1 %}
+   {% endfor %} 
+   <tr>
+      <td colspan=5 style="text-align:right">TOTAL :<b> {{ total }}</b> &euro;</td>
+   </tr>
+</table>
+<div style="height:150px"></div>
+<div>
+   <p>Merci de votre achat!</p>
+</div>
+<p style="text-align:right">Le Responsable.</p>
